@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Intervals.icu AI Bisiklet Koçu</title>
+<style>
+  :root { color-scheme: light; --bg:#0f172a; --card:#ffffff; --ink:#0f172a; --mut:#475569; --acc:#ea580c; }
+  * { box-sizing: border-box; }
+  body { margin:0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif; background:#f1f5f9; color:var(--ink); }
+  header { background:var(--bg); color:#fff; padding:40px 20px; text-align:center; }
+  header h1 { margin:0 0 8px; font-size: clamp(26px, 4vw, 44px); }
+  header p { margin:0; color:#cbd5e1; font-size: clamp(14px, 2vw, 18px); }
+  .badge { display:inline-block; background:var(--acc); color:#fff; font-size:13px; font-weight:700; padding:6px 12px; border-radius:999px; margin-bottom:14px; }
+  main { max-width:1024px; margin:0 auto; padding:24px 16px 64px; }
+  .grid { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap:16px; margin-top:20px; }
+  .card { background:var(--card); border-radius:14px; padding:18px; box-shadow:0 2px 12px rgba(15,23,42,.08); }
+  .card h2, .card h3 { margin-top:0; }
+  code, pre { background:#0f172a; color:#e2e8f0; border-radius:8px; }
+  code { padding:2px 6px; font-size:13px; }
+  pre { padding:12px; overflow:auto; font-size:12.5px; line-height:1.5; }
+  table { width:100%; border-collapse:collapse; font-size:14px; }
+  th, td { text-align:left; padding:8px 10px; border-bottom:1px solid #e2e8f0; }
+  .cta { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; margin-top:18px; }
+  .cta a { background:var(--acc); color:#fff; text-decoration:none; padding:10px 18px; border-radius:10px; font-weight:700; }
+  .cta a.ghost { background:#fff; color:var(--ink); border:1px solid #cbd5e1; }
+  footer { text-align:center; color:var(--mut); font-size:13px; padding:24px; }
+  .status { background:#ecfdf5; border:1px solid #6ee7b7; padding:10px 14px; border-radius:10px; margin-top:16px; font-size:14px; }
+</style>
+</head>
+<body>
+<header>
+  <div class="badge">INTERVALS.ICU + YAPAY ZEKA</div>
+  <h1>AI Bisiklet Koçun Hazır 🚴</h1>
+  <p>Spor ve bisiklet verilerini Intervals.icu üzerinden okuyan, antrenman yazan kişisel koç.</p>
+  <div class="cta">
+    <a href="#baglan">Nasıl Bağlanır?</a>
+    <a class="ghost" href="#ornek">Örnek Koç Komutları</a>
+  </div>
+</header>
+<main>
+  <div class="status" id="ready">✓ Site çalışıyor — Intervals.icu API + MCP ile AI koç bağlantısı aşağıda anlatıldı.</div>
+
+  <div class="grid">
+    <section class="card" id="baglan">
+      <h2>1. En hızlı yol (5 dakika)</h2>
+      <p><strong>MCP ile bağla:</strong> Claude / ChatGPT'ye Intervals.icu MCP sunucusu ekle, OAuth ile giriş yap.</p>
+      <pre>Claude: Ayarlar → Bağlayıcılar → Özel bağlayıcı
+URL: https://intervalsync.icu/mcp/v2
+ChatGPT: Ayarlar → Geliştirici Modu → MCP Bağlayıcı</pre>
+      <p>Alternatif açık kaynak: <code>hhopke/intervals-icu-mcp</code> (API key ile çalışır).</p>
+    </section>
+    <section class="card">
+      <h2>2. API anahtarın</h2>
+      <p>Intervals.icu → <strong>Settings → Developer Settings</strong> altından API key al.</p>
+      <pre>Athlete ID: i123456 (veya 0 = giriş yapan sporcu)
+Base URL: https://intervals.icu/api/v1
+Auth: Basic (API key) veya Bearer (OAuth)</pre>
+      <p>Anahtarını kimseyle ve AI sohbetine düz metin olarak paylaşma; MCP OAuth'u tercih et.</p>
+    </section>
+    <section class="card">
+      <h2>3. AI'ın kullandığı veriler</h2>
+      <table>
+        <tr><th>Veri</th><th>Endpoint</th></tr>
+        <tr><td>Aktiviteler</td><td><code>/athlete/0/activities</code></td></tr>
+        <tr><td>Wellness (kilo, HRV, uyku)</td><td><code>/athlete/0/wellness</code></td></tr>
+        <tr><td>Fitness (CTL / ATL / Form, FTP)</td><td><code>/athlete/0/fitness</code></td></tr>
+        <tr><td>Güç eğrileri</td><td><code>/athlete/0/power-curves</code></td></tr>
+        <tr><td>Takvim / Planlı antrenman</td><td><code>/athlete/0/events</code></td></tr>
+      </table>
+    </section>
+  </div>
+
+  <div class="grid">
+    <section class="card" id="ornek">
+      <h3>Koç gibi davranması için örnek prompt</h3>
+      <pre>Son 90 gün aktivite + wellness + fitness verilerime bak.
+CTL, ATL, TSB, FTP ve güç eğrimi analiz et.
+Haftada 6 saatim var, hedefim yokuş performansı.
+Bana gelecek haftanın polarize bisiklet planını
+Intervals.icu takvim formatında yaz.</pre>
+    </section>
+    <section class="card">
+      <h3>curl ile test</h3>
+      <pre>curl 'https://intervals.icu/api/v1/athlete/0/activities?oldest=2026-09-01&amp;newest=2026-10-14' \
+  -u API_KEY:</pre>
+      <p>Çalışıyorsa AI koçun tüm veriyi okuyabilir demektir.</p>
+    </section>
+    <section class="card">
+      <h3>Not</h3>
+      <p>Bu sayfa statik bir başlangıç şablonudur. Gerçek koçluk sitesi için: Next.js + Intervals OAuth + OpenAI API + Webhook (<code>CALENDAR_UPDATED</code>) mimarisi gerekir.</p>
+      <p>İstersen bir sonraki adımda sana özel antrenör panelini kuralım.</p>
+    </section>
+  </div>
+</main>
+<footer>Intervals.icu verilerinle çalışan AI koç başlangıç sayfası • API key'ini gizli tut</footer>
+</body>
+</html>
